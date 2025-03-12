@@ -1,0 +1,67 @@
+{
+  "project_info": {
+    "project_number": "820251098854",
+    "project_id": "poplistdb",
+    "storage_bucket": "poplistdb.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:820251098854:android:d6372a35743e555d82c527",
+        "android_client_info": {
+          "package_name": "com.example.bubbles"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDPbQjx4F7GHNwrY2zW5Sm2hryPYDK0UK8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:820251098854:android:e88202388d4d19ca82c527",
+        "android_client_info": {
+          "package_name": "com.poplist.poplist_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDPbQjx4F7GHNwrY2zW5Sm2hryPYDK0UK8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:820251098854:android:070b1dc29496057082c527",
+        "android_client_info": {
+          "package_name": "fire.fish"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDPbQjx4F7GHNwrY2zW5Sm2hryPYDK0UK8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
