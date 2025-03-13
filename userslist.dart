@@ -56,7 +56,7 @@ class UsersListPage extends StatelessWidget {
                 onPressed: () async {
                   FirebaseFirestore db = FirebaseFirestore.instance;
                   try {
-                    var snapshot = await db.collection('users').get();
+                    var snapshot = await db.collection('User').get(); // 🔹 Changed "users" to "User"
                     if (snapshot.docs.isNotEmpty) {
                       print('Data fetched from Firestore:');
                       for (var doc in snapshot.docs) {
@@ -75,7 +75,7 @@ class UsersListPage extends StatelessWidget {
               // User List
               Expanded(
                 child: StreamBuilder<QuerySnapshot>(
-                  stream: FirebaseFirestore.instance.collection('users').snapshots(),
+                  stream: FirebaseFirestore.instance.collection('User').snapshots(), // 🔹 Fixed Collection Name
                   builder: (context, snapshot) {
                     if (!snapshot.hasData) {
                       return Center(child: CircularProgressIndicator());
@@ -98,11 +98,11 @@ class UsersListPage extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  user['email'],
+                                  user['email'] ?? 'No Email', // 🔹 Added Null Safety
                                   style: TextStyle(fontSize: 16, color: Colors.black),
                                 ),
                                 Text(
-                                  user['name'],
+                                  user['username'] ?? 'No Name', // 🔹 Added Null Safety
                                   style: TextStyle(fontSize: 16, color: Colors.black, fontWeight: FontWeight.bold),
                                 ),
                               ],
