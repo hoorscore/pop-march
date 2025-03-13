@@ -1,7 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class UsersListPage extends StatelessWidget {
+class UsersListPage extends StatefulWidget {
+  @override
+  _UsersListPageState createState() => _UsersListPageState();
+}
+
+class _UsersListPageState extends State<UsersListPage> {
+  TextEditingController searchController = TextEditingController();
+  String searchQuery = "";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,6 +49,12 @@ class UsersListPage extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: TextField(
+                  controller: searchController,
+                  onChanged: (value) {
+                    setState(() {
+                      searchQuery = value.toLowerCase();
+                    });
+                  },
                   decoration: InputDecoration(
                     filled: true,
                     fillColor: Colors.white.withOpacity(0.9),
@@ -51,41 +65,28 @@ class UsersListPage extends StatelessWidget {
                 ),
               ),
 
-              // Firestore Fetch Button
-              ElevatedButton(
-                onPressed: () async {
-                  FirebaseFirestore db = FirebaseFirestore.instance;
-                  try {
-                    var snapshot = await db.collection('User').get(); // 🔹 Changed "users" to "User"
-                    if (snapshot.docs.isNotEmpty) {
-                      print('Data fetched from Firestore:');
-                      for (var doc in snapshot.docs) {
-                        print('${doc.id} => ${doc.data()}');
-                      }
-                    } else {
-                      print('No data available in Firestore.');
-                    }
-                  } catch (e) {
-                    print('Error fetching data from Firestore: $e');
-                  }
-                },
-                child: Text('Fetch Users from Firestore'),
-              ),
-
-              // User List
+              // User List (with search filtering)
               Expanded(
                 child: StreamBuilder<QuerySnapshot>(
-                  stream: FirebaseFirestore.instance.collection('User').snapshots(), // 🔹 Fixed Collection Name
+                  stream: FirebaseFirestore.instance.collection('User').snapshots(),
                   builder: (context, snapshot) {
                     if (!snapshot.hasData) {
                       return Center(child: CircularProgressIndicator());
                     }
+
                     var users = snapshot.data!.docs;
 
+                    // Filter users based on search input
+                    var filteredUsers = users.where((user) {
+                      String username = (user['username'] ?? '').toLowerCase();
+                      String email = (user['email'] ?? '').toLowerCase();
+                      return username.contains(searchQuery) || email.contains(searchQuery);
+                    }).toList();
+
                     return ListView.builder(
-                      itemCount: users.length,
+                      itemCount: filteredUsers.length,
                       itemBuilder: (context, index) {
-                        var user = users[index];
+                        var user = filteredUsers[index];
                         return Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
                           child: Container(
@@ -98,11 +99,11 @@ class UsersListPage extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  user['email'] ?? 'No Email', // 🔹 Added Null Safety
+                                  user['email'] ?? 'No Email',
                                   style: TextStyle(fontSize: 16, color: Colors.black),
                                 ),
                                 Text(
-                                  user['username'] ?? 'No Name', // 🔹 Added Null Safety
+                                  user['username'] ?? 'No Name',
                                   style: TextStyle(fontSize: 16, color: Colors.black, fontWeight: FontWeight.bold),
                                 ),
                               ],
