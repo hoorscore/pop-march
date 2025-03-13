@@ -78,7 +78,20 @@ class _SettingsPageState extends State<SettingsPage> {
                     settingsOption(context, "تعديل الحساب الشخصي"),
                     settingsOption(context, "تغيير كلمة المرور"),
                     divider(),
-                    settingsOption(context, "الصلاحيات"),
+                    // Make "الصلاحيات" bold and align it to the right
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8),
+                      child: Align(
+                        alignment: Alignment.centerRight, // Align to the right
+                        child: Text(
+                          "الصلاحيات",
+                          style: TextStyle(
+                              fontSize: 18,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold), // Bold text
+                        ),
+                      ),
+                    ),
                     settingsOption(context, "تعديل أصوات الخلفية"),
                     settingsOption(context, "تعديل سياسة الخصوصية"),
                     settingsOption(context, "تعديل الشروط والأحكام"),
@@ -87,6 +100,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   ],
                 ),
               ),
+
               // Logout Button
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
@@ -140,6 +154,7 @@ class _SettingsPageState extends State<SettingsPage> {
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: GestureDetector(
         onTap: () {
+          // Handle navigation for interactive options
           if (title == "تعديل أصوات الخلفية") {
             Navigator.push(
               context,
@@ -164,11 +179,15 @@ class _SettingsPageState extends State<SettingsPage> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Icon(Icons.arrow_back, color: Colors.white),
+            // Only show arrow if the title isn't "الصلاحيات"
+            if (title != "الصلاحيات")
+              Icon(Icons.arrow_back, color: Colors.white),
             Text(
               title,
               style: TextStyle(
-                  fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold),
+                  fontSize: 18,
+                  color: Colors.white,
+                  fontWeight: title == "الصلاحيات" ? FontWeight.normal : FontWeight.bold), // Make "الصلاحيات" normal weight
             ),
           ],
         ),
