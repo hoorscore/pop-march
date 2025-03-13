@@ -38,17 +38,23 @@ class _UsersListPageState extends State<UsersListPage> {
                     Spacer(),
                     Text(
                       "المستخدمين",
-                      style: TextStyle(fontSize: 24, color: Colors.white, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                        fontSize: 24,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold, // Bold text
+                      ),
                     ),
                     Spacer(),
                   ],
                 ),
               ),
 
-              // Search Bar
+
+              // Search Bar (Aligned to the Right)
               Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: TextField(
+                  textAlign: TextAlign.right, // Align text to the right
                   controller: searchController,
                   onChanged: (value) {
                     setState(() {
@@ -58,14 +64,42 @@ class _UsersListPageState extends State<UsersListPage> {
                   decoration: InputDecoration(
                     filled: true,
                     fillColor: Colors.white.withOpacity(0.9),
-                    hintText: "البحث عن مستخدم...",
+                    hintText: "...البحث عن مستخدم",
+                    hintStyle: TextStyle(color: Colors.grey, fontSize: 16),
                     prefixIcon: Icon(Icons.search),
-                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10)),
                   ),
                 ),
               ),
 
-              // User List (with search filtering)
+              // Table Headers (Bold)
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "البريد الإلكتروني",
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold, // Bold text
+                        color: Colors.white,
+                      ),
+                    ),
+                    Text(
+                      "اسم المستخدم",
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold, // Bold text
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              // User List
               Expanded(
                 child: StreamBuilder<QuerySnapshot>(
                   stream: FirebaseFirestore.instance.collection('User').snapshots(),
@@ -104,7 +138,11 @@ class _UsersListPageState extends State<UsersListPage> {
                                 ),
                                 Text(
                                   user['username'] ?? 'No Name',
-                                  style: TextStyle(fontSize: 16, color: Colors.black, fontWeight: FontWeight.bold),
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold, // Bold usernames
+                                  ),
                                 ),
                               ],
                             ),
