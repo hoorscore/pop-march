@@ -3,7 +3,36 @@ import 'sound_settings.dart';
 import 'FAQ.dart';
 import 'userslist.dart';  // Ensure this is imported correctly
 
-class SettingsPage extends StatelessWidget {
+class SettingsPage extends StatefulWidget {
+  @override
+  _SettingsPageState createState() => _SettingsPageState();
+}
+
+class _SettingsPageState extends State<SettingsPage> {
+  int selectedIndex = 3; // Default to settings tab
+
+  void onItemTapped(int index) {
+    setState(() {
+      selectedIndex = index;
+    });
+
+    // Navigate to respective pages
+    switch (index) {
+      case 0:
+      // Navigate to home page if you have one
+        break;
+      case 1:
+      // Navigate to checklist page if you have one
+        break;
+      case 2:
+      // Navigate to profile page if you have one
+        break;
+      case 3:
+      // Already in settings, no navigation needed
+        break;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -13,7 +42,7 @@ class SettingsPage extends StatelessWidget {
           Container(
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage("assets/img4.jpg"), // Correct asset path
+                image: AssetImage("assets/img4.jpg"), // Ensure asset exists
                 fit: BoxFit.cover,
               ),
             ),
@@ -21,6 +50,7 @@ class SettingsPage extends StatelessWidget {
           // Content
           Column(
             children: [
+              // Header
               Padding(
                 padding: const EdgeInsets.only(top: 50, left: 15, right: 15),
                 child: Row(
@@ -49,7 +79,6 @@ class SettingsPage extends StatelessWidget {
                     settingsOption(context, "تغيير كلمة المرور"),
                     divider(),
                     settingsOption(context, "الصلاحيات"),
-                    divider(),
                     settingsOption(context, "تعديل أصوات الخلفية"),
                     settingsOption(context, "تعديل سياسة الخصوصية"),
                     settingsOption(context, "تعديل الشروط والأحكام"),
@@ -60,10 +89,11 @@ class SettingsPage extends StatelessWidget {
               ),
               // Logout Button
               Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 20, vertical: 20),
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    // Add logout logic here
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.amber,
                     minimumSize: Size(double.infinity, 50),
@@ -74,7 +104,7 @@ class SettingsPage extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.arrow_back, color: Colors.white),
+                      Icon(Icons.logout, color: Colors.white),
                       SizedBox(width: 8),
                       Text("تسجيل خروج",
                           style: TextStyle(fontSize: 18, color: Colors.white)),
@@ -90,8 +120,10 @@ class SettingsPage extends StatelessWidget {
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         backgroundColor: Colors.amber,
-        selectedItemColor: Colors.white,
+        selectedItemColor: Colors.blue, // Blue for selected item
         unselectedItemColor: Colors.white70,
+        currentIndex: selectedIndex, // Track the selected index
+        onTap: onItemTapped,
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: ""),
           BottomNavigationBarItem(icon: Icon(Icons.checklist), label: ""),
